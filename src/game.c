@@ -5,6 +5,7 @@
 #include "../include/game.h"
 #include "../include/anim.h"
 #include "../include/constants.h"
+#include "../include/utility.h"
 
 // *** Local Decs ***
 void gameInit();
@@ -15,7 +16,7 @@ void gameDraw();
 
 // *** Vars ***
 float deltaTime;
-enum Direction {Back=0, Right, Down, Left};
+enum Direction {Up=0, Right, Down, Left};
 enum Action {Idle=0, Run=4};
 
 
@@ -28,6 +29,8 @@ typedef struct GameObject {
 }GameObject;
 
 GameObject foxy = {0};
+
+float foxySpeed = 3;
 
 
 // ********************
@@ -59,7 +62,7 @@ void gameInit() {
         true,
         };
 
-    Anim foxyAnim[] = {foxyBackIdle, foxySideIdle, foxyFrontIdle, foxySideIdleLeft,foxyBackRun, foxySideRun,foxyFrontRun, foxySideRunLeft};
+    Anim foxyAnim[] = {foxyBackIdle, foxySideIdle, foxyFrontIdle, foxySideIdleLeft, foxyBackRun, foxySideRun,foxyFrontRun, foxySideRunLeft};
 
     for (int i = 0; i < 8; ++i) {
         foxy.anim[i] = foxyAnim[i];
@@ -72,9 +75,28 @@ void gameInit() {
 }
 
 void gameUpdate() {
-
-
+    if (IsKeyDown(KEY_W) || IsKeyDown(KEY_UP)){
+        foxy.direction = Up;
+        foxy.action = Run;
+        foxy.position.y -= foxySpeed * (deltaTime * 60);
+    } else if (IsKeyDown(KEY_S) || IsKeyDown(KEY_DOWN)){
+        foxy.direction = Down;
+        foxy.action = Run;
+        foxy.position.y += foxySpeed * (deltaTime * 60);
+    } else if (IsKeyDown(KEY_A) || IsKeyDown(KEY_LEFT)){
+        foxy.direction = Left;
+        foxy.action = Run;
+        foxy.position.x -= foxySpeed * (deltaTime * 60);
+    } else if (IsKeyDown(KEY_D) || IsKeyDown(KEY_RIGHT)){
+        foxy.direction = Right;
+        foxy.action = Run;
+        foxy.position.x += foxySpeed * (deltaTime * 60);
+    } else {
+        foxy.action = Idle;
     }
+    foxy.position = Vector2Clamp(foxy.position, 0, SCREEN_WIDTH - 60, 0, SCREEN_HEIGHT-60);
+
+}
 
 void gameDraw() {
 
@@ -82,20 +104,7 @@ void gameDraw() {
 
     ClearBackground(RAYWHITE);
 
-    for (int i = 0; i < 8; ++i) {
-        drawAnimFrame(&foxy.anim[i], (Vector2){i* 65+65, 100}, deltaTime);
-    }
-
-//    for (int i = 0; i < 8; ++i) {
-//        drawAnimFrame(&doggy[i], (Vector2){i* 65+65, 300}, deltaTime);
-//    }
-//    for (int i = 0; i < 9; ++i) {
-//        drawAnimFrame(&chick[i], (Vector2){i* 65+ 65, 500}, deltaTime);
-//    }
-//    for (int i = 0; i < 9; ++i) {
-//        drawAnimFrame(&misc[i], (Vector2){ i* 65 +65, 700}, deltaTime);
-//    }
-
+    drawAnimFrame(&foxy.anim[foxy.direction+ foxy.action], foxy.position, deltaTime);
     EndDrawing();
 }
 
