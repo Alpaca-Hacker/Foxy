@@ -17,14 +17,17 @@ typedef struct Anim{
     bool direction;
 }Anim;
 
-static const Anim foxyBackIdle      = {(Rectangle){0, 37, 21, 25}, 4, 0, 0.0f, 0.25f, false};
-static const Anim foxyBackRun       = {(Rectangle){0, 62, 21, 25}, 4, 0, 0.0f, 0.25f, false};
-static const Anim foxyFrontIdle     = {(Rectangle){228, 91, 21, 25}, 4, 0, 0.0f, 0.25f, false};
-static const Anim foxyFrontRun      = {(Rectangle){312, 91, 21, 25}, 4, 0, 0.0f, 0.25f, false};
-static const Anim foxySideIdle      = {(Rectangle){0, 116, 20, 25}, 4, 0, 0.0f, 0.25f, false};
-static const Anim foxySideIdleLeft  = {(Rectangle){396, 91, 20, 25}, 4, 0, 0.0f, 0.25f, false};
-static const Anim foxySideRun       = {(Rectangle){160, 116, 20, 25}, 4, 0, 0.0f, 0.25f, false};
-static const Anim foxySideRunLeft   = {(Rectangle){80, 116, 20, 25}, 4, 0, 0.0f, 0.25f, false};
+static const float foxyRunDelay = 0.10f;
+static const float foxyIdleDelay = 0.25f;
+
+static const Anim foxyBackIdle      = {(Rectangle){0, 37, 21, 25}, 4, 0, 0.0f, foxyIdleDelay, false};
+static const Anim foxyBackRun       = {(Rectangle){0, 62, 21, 25}, 4, 0, 0.0f, foxyRunDelay, false};
+static const Anim foxyFrontIdle     = {(Rectangle){228, 91, 21, 25}, 4, 0, 0.0f, foxyIdleDelay, false};
+static const Anim foxyFrontRun      = {(Rectangle){312, 91, 21, 25}, 4, 0, 0.0f, foxyRunDelay, false};
+static const Anim foxySideIdle      = {(Rectangle){0, 116, 20, 25}, 4, 0, 0.0f, foxyIdleDelay, false};
+static const Anim foxySideIdleLeft  = {(Rectangle){396, 91, 20, 25}, 4, 0, 0.0f, foxyIdleDelay, false};
+static const Anim foxySideRun       = {(Rectangle){160, 116, 20, 25}, 4, 0, 0.0f, foxyRunDelay, false};
+static const Anim foxySideRunLeft   = {(Rectangle){80, 116, 20, 25}, 4, 0, 0.0f, foxyRunDelay, false};
 
 static const Anim chickBackIdle     = {(Rectangle){238, 0, 18, 22}, 4, 0, 0.0f, 0.25f, false};
 static const Anim chickBackRun      = {(Rectangle){310, 0, 18, 22}, 4, 0, 0.0f, 0.25f, false};

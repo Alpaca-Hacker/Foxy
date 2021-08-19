@@ -23,9 +23,12 @@ void drawAnimFrame(Anim *anim, Vector2 position, float deltaTime){
     anim->time += deltaTime;
 
     if(anim->time >= anim->delay){
-        anim->currentFrame ++;
+        anim-> direction ? anim ->currentFrame++ : anim->currentFrame --;
         if (anim->currentFrame >= anim->maxFrames){
             anim->currentFrame= 0;
+        }
+        if (anim->currentFrame < 0){
+            anim->currentFrame = anim->maxFrames-1;
         }
         anim->time = 0;
     }
